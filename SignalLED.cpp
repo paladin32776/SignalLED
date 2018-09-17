@@ -7,7 +7,7 @@ SignalLED::SignalLED(unsigned char _pin)
 
 SignalLED::SignalLED(unsigned char _pin, unsigned char _state)
 {
-  SignalLED(_pin, state, true);
+  SignalLED(_pin, _state, true);
 }
 
 SignalLED::SignalLED(unsigned char _pin, unsigned char _state, bool _active_low)
@@ -19,7 +19,7 @@ SignalLED::SignalLED(unsigned char _pin, unsigned char _state, bool _active_low)
   set_led(false);
   etp_slow = new EnoughTimePassed(SLED_TIME_SLOW);
   etp_fast = new EnoughTimePassed(SLED_TIME_FAST);
-  set_state(state);
+  set(state);
 }
 
 SignalLED::~SignalLED()
@@ -40,8 +40,10 @@ void SignalLED::invert_led()
   set_led(led);
 }
 
-void SignalLED::set_state(unsigned int _state)
+void SignalLED::set(unsigned int _state)
 {
+  if (state==_state)
+    return;
   state = _state;
   switch (state)
   {
@@ -52,6 +54,24 @@ void SignalLED::set_state(unsigned int _state)
     case SLED_BLINK_FAST_1:
     case SLED_BLINK_FAST_3:
       etp_slow->prime();
+      break;
+  }
+}
+
+unsigned int SignalLED::get()
+{
+  return state;
+}
+
+void SignalLED::invert()
+{
+  switch (state)
+  {
+    case SLED_OFF:
+      state = SLED_ON;
+      break;
+    case SLED_ON:
+      state = SLED_OFF;
       break;
   }
 }

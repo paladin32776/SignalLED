@@ -28,6 +28,8 @@ class SignalLED
     SignalLED(unsigned char _pin, unsigned char _state);
     SignalLED(unsigned char _pin, unsigned char _state, bool _active_low);
     ~SignalLED();
-    void set_state(unsigned int _state);
+    void set(unsigned int _state);
+    unsigned int get();
+    void invert();
     void check();
 };
