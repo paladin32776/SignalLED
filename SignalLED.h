@@ -7,9 +7,11 @@
 #define SLED_BLINK_FAST 3
 #define SLED_BLINK_FAST_1 4
 #define SLED_BLINK_FAST_3 5
+#define SLED_PULSE 6
 
 #define SLED_TIME_SLOW 1000
 #define SLED_TIME_FAST 100
+#define SLED_TIME_PULSE 500
 
 class SignalLED
 {
@@ -21,6 +23,8 @@ class SignalLED
     unsigned char blink_counter;
     EnoughTimePassed* etp_slow;
     EnoughTimePassed* etp_fast;
+    EnoughTimePassed* etp_pulse;
+    bool pulse;
     void set_led(bool _led);
     void invert_led();
   public:

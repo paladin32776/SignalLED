@@ -19,6 +19,7 @@ SignalLED::SignalLED(unsigned char _pin, unsigned char _state, bool _active_low)
   set_led(false);
   etp_slow = new EnoughTimePassed(SLED_TIME_SLOW);
   etp_fast = new EnoughTimePassed(SLED_TIME_FAST);
+  etp_pulse = new EnoughTimePassed(SLED_TIME_PULSE);
   set(state);
 }
 
@@ -54,6 +55,9 @@ void SignalLED::set(unsigned int _state)
     case SLED_BLINK_FAST_1:
     case SLED_BLINK_FAST_3:
       etp_slow->prime();
+      break;
+    case SLED_PULSE:
+      etp_pulse->event();
       break;
   }
 }
@@ -115,6 +119,11 @@ void SignalLED::check()
         blink_counter--;
         invert_led();
       }
+      break;
+    case SLED_PULSE:
+      set_led(true);
+      if (etp_pulse->enough_time())
+        set(SLED_OFF);
       break;
   }
 }
