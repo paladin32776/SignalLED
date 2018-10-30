@@ -13,6 +13,9 @@
 #define SLED_TIME_FAST 100
 #define SLED_TIME_PULSE 500
 
+#ifndef SIGNALLED_H
+#define SIGNALLED_H
+
 class SignalLED
 {
   private:
@@ -37,3 +40,5 @@ class SignalLED
     void invert();
     void check();
 };
+
+#endif // SIGNALLED_H
