@@ -41,10 +41,10 @@ void SignalLED::invert_led()
   set_led(led);
 }
 
-void SignalLED::set(unsigned int _state)
+unsigned int SignalLED::set(unsigned int _state)
 {
   if (state==_state)
-    return;
+    return state;
   state = _state;
   switch (state)
   {
@@ -60,6 +60,7 @@ void SignalLED::set(unsigned int _state)
       etp_pulse->event();
       break;
   }
+  return state;
 }
 
 unsigned int SignalLED::get()
@@ -67,7 +68,7 @@ unsigned int SignalLED::get()
   return state;
 }
 
-void SignalLED::invert()
+unsigned int SignalLED::invert()
 {
   switch (state)
   {
@@ -78,6 +79,7 @@ void SignalLED::invert()
       state = SLED_OFF;
       break;
   }
+  return state;
 }
 
 void SignalLED::check()
